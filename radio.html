@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BG6TTI</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+
+      td {
+        padding: 4px;
+      }
+
+      input {
+        outline-style: none;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 8px 8px;
+        width: 200px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" style="visibility: hidden">
+      <div>BG6TTI Logbook Query</div>
+      <div style="margin-top: 8px">
+        <input v-model="worked" placeholder="Input Your Callsign" />
+        <button @click="submit" style="margin-left: 4px">Find</button>
+        <button @click="clear" style="margin-left: 4px">Clear</button>
+      </div>
+      <div v-if="init == false && record.length>0" style="margin-top: 8px">
+        <table style="border-collapse: collapse">
+          <tbody>
+            <tr>
+              <td>Worked</td>
+              <td>Band</td>
+              <td>Mode</td>
+              <td>Time</td>
+              <td>Comment</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr v-for="(item,index) in record" :key="index">
+              <td>{{item.worked}}</td>
+              <td>{{item.band}}</td>
+              <td>{{item.mode}}</td>
+              <td>{{item.qso_time}}</td>
+              <td>{{item.comment}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div v-if="init == false && record.length == 0" style="margin-top: 8px">
+        <p>No Record</p>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          worked: "",
+          record: [],
+          init: true,
+        },
+        mounted() {
+          document.getElementById("app").style.visibility = "visible";
+        },
+        methods: {
+          clear: function () {
+            this.record = [];
+            this.init = true;
+            this.worked = "";
+          },
+          submit: function () {
+            axios
+              .get(
+                "https://service-g0sipzb6-1251606852.gz.apigw.tencentcs.com/query",
+                {
+                  params: {
+                    worked: this.worked,
+                  },
+                }
+              )
+              .then((res) => {
+                if (res.status === 200) {
+                  const { data: response = {} } = res;
+                  const { code, data = [] } = response;
+                  if (code === 0) {
+                    this.init = false;
+                    this.record = data;
+                  } else {
+                    alert("something wrong");
+                  }
+                } else {
+                  alert("something wrong");
+                }
+              })
+              .catch(function (error) {
+                alert("something wrong");
+              });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
