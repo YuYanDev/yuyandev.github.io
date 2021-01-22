@@ -3,8 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BG6TTI</title>
+    <title>Ham Radio Online Log</title>
     <style>
+      html {
+        margin: 0;
+        padding: 0;
+        font-family: monospace;
+      }
+
+      body {
+        margin: 0 20px;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        font-family: "Bellefair", serif;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      a:link {
+        color: rgb(0, 0, 238);
+      }
+
+      a:visited {
+        color: rgb(0, 0, 238);
+      }
+
+      button {
+        font-family: monospace;
+        cursor: pointer;
+        outline: none;
+        border-width: 0.5px;
+        border-radius: 1px;
+        background: #fff;
+        font-size: 14px;
+        height: 22px;
+      }
       table,
       th,
       td {
@@ -16,47 +56,50 @@
       }
 
       input {
+        font-family: monospace;
         outline-style: none;
         border: 1px solid #ccc;
-        border-radius: 3px;
-        padding: 8px 8px;
-        width: 200px;
-        font-size: 16px;
+        border-radius: 0px;
+        padding: 2px 2px;
+        width: 120px;
+        font-size: 14px;
       }
     </style>
   </head>
   <body>
-    <div id="app" style="visibility: hidden">
-      <div>BG6TTI Logbook Query</div>
-      <div style="margin-top: 8px">
-        <input v-model="worked" placeholder="Input Your Callsign" />
-        <button @click="submit" style="margin-left: 4px">Find</button>
-        <button @click="clear" style="margin-left: 4px">Clear</button>
-      </div>
-      <div v-if="init == false && record.length>0" style="margin-top: 8px">
-        <table style="border-collapse: collapse">
-          <tbody>
-            <tr>
-              <td>Worked</td>
-              <td>Band</td>
-              <td>Mode</td>
-              <td>Time</td>
-              <td>Comment</td>
-            </tr>
-          </tbody>
-          <tbody>
-            <tr v-for="(item,index) in record" :key="index">
-              <td>{{item.worked}}</td>
-              <td>{{item.band}}</td>
-              <td>{{item.mode}}</td>
-              <td>{{item.qso_time}}</td>
-              <td>{{item.comment}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div v-if="init == false && record.length == 0" style="margin-top: 8px">
-        <p>No Record</p>
+    <div style="margin: 0 20px">
+      <div id="app" style="visibility: hidden; margin-top: 16px">
+        <div>BG6TTI Online Log Search</div>
+        <div style="margin-top: 8px">
+          <input v-model="worked" placeholder="Input CallSign" />
+          <button @click="submit" style="margin-left: 4px">Find</button>
+          <button @click="clear" style="margin-left: 4px">Clear</button>
+        </div>
+        <div v-if="init == false && record.length>0" style="margin-top: 8px">
+          <table style="border-collapse: collapse">
+            <tbody>
+              <tr>
+                <td>Worked</td>
+                <td>Band</td>
+                <td>Mode</td>
+                <td>Time</td>
+                <td>Comment</td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr v-for="(item,index) in record" :key="index">
+                <td>{{item.worked}}</td>
+                <td>{{item.band}}</td>
+                <td>{{item.mode}}</td>
+                <td>{{item.qso_time}}</td>
+                <td>{{item.comment}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-if="init == false && record.length == 0" style="margin-top: 8px">
+          <p>No Record</p>
+        </div>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -79,9 +122,12 @@
             this.worked = "";
           },
           submit: function () {
+            if (this.worked.trim() === "") {
+              return;
+            }
             axios
               .get(
-                "https://service-g0sipzb6-1251606852.gz.apigw.tencentcs.com/query",
+                "https://service-g0sipzb6-1251606852.gz.apigw.tencentcs.com/api/query",
                 {
                   params: {
                     worked: this.worked,
