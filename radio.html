@@ -67,15 +67,22 @@
     </style>
   </head>
   <body>
+    <!-- log search -->
     <div style="margin: 0 20px">
       <div id="app" style="visibility: hidden; margin-top: 16px">
-        <div>BG6TTI Online Log Search</div>
-        <div style="margin-top: 8px">
+        <div style="font-size: larger">BG6TTI Online Log Search</div>
+        <div style="margin-top: 16px">
           <input v-model="worked" placeholder="Input CallSign" />
           <button @click="submit" style="margin-left: 4px">Find</button>
           <button @click="clear" style="margin-left: 4px">Clear</button>
         </div>
-        <div v-if="init == false && record.length>0" style="margin-top: 8px">
+        <div v-if="init == true" style="margin-top: 8px; min-height: 96px">
+          <p style="margin-top: 32px">↑ Input your callSign to search log.</p>
+        </div>
+        <div
+          v-if="init == false && record.length>0"
+          style="margin-top: 8px; min-height: 96px"
+        >
           <table style="border-collapse: collapse">
             <tbody>
               <tr>
@@ -97,10 +104,59 @@
             </tbody>
           </table>
         </div>
-        <div v-if="init == false && record.length == 0" style="margin-top: 8px">
-          <p>No Record</p>
+        <div
+          v-if="init == false && record.length == 0"
+          style="margin-top: 8px; min-height: 96px"
+        >
+          <p style="margin-top: 32px">No Record</p>
         </div>
       </div>
+    </div>
+    <!-- QSL Info -->
+    <div style="margin: 0 20px">
+      <p>--------------QSL-INFO--------------</p>
+      <p>&nbsp;</p>
+      <p>Support: <del>BURO</del>, LoTW, <del>Direct Via BH2RO</del></p>
+      <p>Not Support: EQSL</p>
+
+      <p style="color: red">
+        <em>
+          <strong>
+            Due to the impact of COVID-19, all paper QSL cards will not be
+            accepted unless there are special circumstances.
+          </strong>
+        </em>
+      </p>
+      <p style="color: red">
+        <em>
+          <strong>
+            More info please contact me: sakura#alleysakura.com (The title needs
+            to indicate your callsign)
+          </strong>
+        </em>
+      </p>
+
+      <p>&nbsp;</p>
+      <p>-------Direct-Address-(zh-CN)-------</p>
+      <p>&nbsp;</p>
+      <p>中国辽宁省沈阳市第6010号邮政信箱 110034</p>
+      <p>&nbsp;</p>
+      <p>-------Direct-Address-(en-US)-------</p>
+      <p>Direct via BH2RO, with SASE/SAE</p>
+      <p>&nbsp;</p>
+      <p>P.O.BOX 6010,</p>
+      <p>SHENYANG LIAONING 110034,</p>
+      <p>P.R.CHINA</p>
+      <p>&nbsp;</p>
+    </div>
+    <hr />
+    <div style="margin: 0 20px">
+      <p style="float: left">
+        &copy;2015 - 2021 YuYan. All Rights Reserved. |
+        <a href="/privacy-policy.html">Privacy & Policy</a> |
+        <a href="/link.html">Links</a>
+      </p>
+      <p style="float: right">E-mail: sakura#alleysakura.com</p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -126,14 +182,11 @@
               return;
             }
             axios
-              .get(
-                "/api/query",
-                {
-                  params: {
-                    worked: this.worked,
-                  },
-                }
-              )
+              .get("/api/query", {
+                params: {
+                  worked: this.worked,
+                },
+              })
               .then((res) => {
                 if (res.status === 200) {
                   const { data: response = {} } = res;
