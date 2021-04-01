@@ -90,8 +90,14 @@
           <button @click="submit" style="margin-left: 4px">Find</button>
           <button @click="clear" style="margin-left: 4px">Clear</button>
         </div>
-        <div v-if="init == true" style="margin-top: 8px; min-height: 96px">
+        <div
+          v-if="init == true && loading == false"
+          style="margin-top: 8px; min-height: 96px"
+        >
           <p style="margin-top: 32px">↑ Input your callSign to search log.</p>
+        </div>
+        <div v-if="loading == true" style="margin-top: 8px; min-height: 96px">
+          <p style="margin-top: 32px">Loading</p>
         </div>
         <div
           v-if="init == false && record.length>0"
@@ -125,6 +131,45 @@
           <p style="margin-top: 32px">No Record</p>
         </div>
       </div>
+    </div>
+    <div style="margin: 0 20px">
+      <p>----------------RIG-----------------</p>
+      <p>&nbsp;</p>
+      <table style="border-collapse: collapse">
+        <tbody>
+          <tr>
+            <td>RIG</td>
+            <td>RIG-Band</td>
+            <td>ANT</td>
+            <td>ANT-Band</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <td rowspan="2">ICOM IC-705</td>
+            <td rowspan="2">HF/50MHz/144MHz/430MHz</td>
+            <td>PAC-12</td>
+            <td>7-50MHz</td>
+          </tr>
+          <tr>
+            <td>DKPG10</td>
+            <td>3.5-50MHz</td>
+          </tr>
+          <tr>
+            <td>Senhaikesi 8800</td>
+            <td>144MHz/430MHz</td>
+            <td>Diamond 771</td>
+            <td>144MHz/430MHz</td>
+          </tr>
+          <tr>
+            <td>Baofeng UV-5R</td>
+            <td>144MHz/430MHz</td>
+            <td>Diamond 771</td>
+            <td>144MHz/430MHz</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>&nbsp;</p>
     </div>
     <!-- QSL Info -->
     <div style="margin: 0 20px">
@@ -181,6 +226,7 @@
           worked: "",
           record: [],
           init: true,
+          loading: false,
         },
         mounted() {
           document.getElementById("app").style.visibility = "visible";
@@ -190,11 +236,13 @@
             this.record = [];
             this.init = true;
             this.worked = "";
+            this.loading = false;
           },
           submit: function () {
             if (this.worked.trim() === "") {
               return;
             }
+            this.loading = true;
             axios
               .get("/api/query", {
                 params: {
@@ -203,6 +251,7 @@
               })
               .then((res) => {
                 if (res.status === 200) {
+                  this.loading = false;
                   const { data: response = {} } = res;
                   const { code, data = [] } = response;
                   if (code === 0) {
@@ -216,6 +265,7 @@
                 }
               })
               .catch(function (error) {
+                this.loading = false;
                 alert("something wrong");
               });
           },
