@@ -97,22 +97,22 @@
           <p style="margin-top: 32px">↑ Input your callSign to search log.</p>
         </div>
         <div v-if="loading == true" style="margin-top: 8px; min-height: 96px">
-          <p style="margin-top: 32px">Loading</p>
+          <p style="margin-top: 32px">Loading...</p>
         </div>
         <div
           v-if="init == false && record.length>0"
           style="margin-top: 8px; min-height: 96px"
         >
           <table style="border-collapse: collapse">
-            <tbody>
+            <thead border="1">
               <tr>
-                <td>Worked</td>
-                <td>Band</td>
-                <td>Mode</td>
-                <td>Time</td>
-                <td>Comment</td>
+                <th>Worked</th>
+                <th>Band</th>
+                <th>Mode</th>
+                <th>Time</th>
+                <th>Comment</th>
               </tr>
-            </tbody>
+            </thead>
             <tbody>
               <tr v-for="(item,index) in record" :key="index">
                 <td>{{item.worked}}</td>
@@ -136,14 +136,14 @@
       <p>----------------RIG-----------------</p>
       <p>&nbsp;</p>
       <table style="border-collapse: collapse">
-        <tbody>
+        <thead>
           <tr>
-            <td>RIG</td>
-            <td>RIG-Band</td>
-            <td>ANT</td>
-            <td>ANT-Band</td>
+            <th>RIG</th>
+            <th>RIG-Band</th>
+            <th>ANT</th>
+            <th>ANT-Band</th>
           </tr>
-        </tbody>
+        </thead>
         <tbody>
           <tr>
             <td rowspan="2">ICOM IC-705</td>
