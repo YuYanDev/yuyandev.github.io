@@ -1,0 +1,56 @@
+html {
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+  }
+
+  body {
+    margin: 0 20px;
+    max-width: 1280px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: "Bellefair", serif;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:link {
+    color: rgb(0, 0, 238);
+  }
+
+  a:visited {
+    color: rgb(0, 0, 238);
+  }
+
+  p {
+    font-family: monospace;
+  }
+
+  .title {
+    display: flex;
+    font-family: "Bellefair", serif;
+    font-size: 2em;
+    line-height: 50px;
+    margin: 20px 0;
+    margin-left: 10px;
+  }
+
+  @media screen and (max-device-width: 480px) {
+    .title {
+      display: block;
+      font-size: 25px;
+      margin-left: 0;
+    }
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
