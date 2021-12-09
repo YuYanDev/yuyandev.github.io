@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ham Radio Online Log</title>
+    <title>Amature Radio Online Log</title>
     <link rel="icon" href="/favicon.png" sizes="16x16" type="image/png" />
     <script
       async
@@ -84,53 +84,35 @@
   <body>
     <!-- log search -->
     <div style="margin: 0 20px">
-      <div id="app" style="visibility: hidden; margin-top: 16px">
-        <div style="font-size: larger">BG5ABL Online Log Search (ex CallSign BG6TTI Support)</div>
-        <div style="margin-top: 16px">
-          <input v-model="worked" placeholder="Input CallSign" />
-          <button @click="submit" style="margin-left: 4px">Find</button>
-          <button @click="clear" style="margin-left: 4px">Clear</button>
+      <div style="margin-top: 16px">
+        <div style="font-size: larger">
+          BG5ABL Online Log Search (ClubLog OQRS)
         </div>
-        <div
-          v-if="init == true && loading == false"
-          style="margin-top: 8px; min-height: 96px"
-        >
-          <p style="margin-top: 32px">↑ Input your callSign to search log.</p>
+
+        <iframe
+          name="iframe"
+          src="https://clublog.org/logsearch.php?log=BG5ABL&iframe=1"
+          width="100%"
+          height="300"
+          scrolling="yes"
+          align="top"
+          frameborder="0"
+        ></iframe>
+      </div>
+      <div style="margin-top: 16px">
+        <div style="font-size: larger">
+          ex Callsign BG6TTI (2018.3-2021.8) Online Log Search (ClubLog OQRS)
         </div>
-        <div v-if="loading == true" style="margin-top: 8px; min-height: 96px">
-          <p style="margin-top: 32px">Loading...</p>
-        </div>
-        <div
-          v-if="init == false && record.length>0"
-          style="margin-top: 8px; min-height: 96px"
-        >
-          <table style="border-collapse: collapse">
-            <thead border="1">
-              <tr>
-                <th>Worked</th>
-                <th>Band</th>
-                <th>Mode</th>
-                <th>Time</th>
-                <th>Comment</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(item,index) in record" :key="index">
-                <td>{{item.worked}}</td>
-                <td>{{item.band}}</td>
-                <td>{{item.mode}}</td>
-                <td>{{item.qso_time}}</td>
-                <td>{{item.comment}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div
-          v-if="init == false && record.length == 0"
-          style="margin-top: 8px; min-height: 96px"
-        >
-          <p style="margin-top: 32px">No Record</p>
-        </div>
+
+        <iframe
+          name="iframe"
+          src="https://clublog.org/logsearch.php?log=BG6TTI&iframe=1"
+          width="100%"
+          height="300"
+          scrolling="yes"
+          align="top"
+          frameborder="0"
+        ></iframe>
       </div>
     </div>
     <div style="margin: 0 20px">
@@ -146,16 +128,6 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td rowspan="2">ICOM IC-7300</td>
-            <td rowspan="2">1.8MHz/HF/50MHz</td>
-            <td>PAC-12</td>
-            <td>7-50MHz</td>
-          </tr>
-          <tr>
-            <td>DKPG10</td>
-            <td>3.5-50MHz</td>
-          </tr>
           <tr>
             <td>Senhaikesi 8800</td>
             <td>144MHz/430MHz</td>
@@ -176,17 +148,9 @@
     <div style="margin: 0 20px">
       <p>--------------QSL-INFO--------------</p>
       <p>&nbsp;</p>
-      <p>Support: <del>BURO</del>, LoTW, <del>Direct Via BH2RO</del></p>
+      <p>Support: OQRS, LoTW, <del>Direct Via BH2RO</del></p>
       <p>Not Support: EQSL</p>
 
-      <p style="color: red">
-        <em>
-          <strong>
-            Due to the impact of COVID-19, all paper QSL cards will not be
-            accepted unless there are special circumstances.
-          </strong>
-        </em>
-      </p>
       <p style="color: red">
         <em>
           <strong>
@@ -214,64 +178,10 @@
       <p style="float: left">
         &copy;2015 - 2021 YuYan. All Rights Reserved. |
         <a href="/privacy-policy.html">Privacy & Policy</a> |
-        <a href="/link.html">Links</a>
+        <a href="/link.html">Links</a> |
+        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en">CC BY-NC-ND 4.0</a>
       </p>
       <p style="float: right">E-mail: sakura#alleysakura.com</p>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script>
-      var app = new Vue({
-        el: "#app",
-        data: {
-          worked: "",
-          record: [],
-          init: true,
-          loading: false,
-        },
-        mounted() {
-          document.getElementById("app").style.visibility = "visible";
-        },
-        methods: {
-          clear: function () {
-            this.record = [];
-            this.init = true;
-            this.worked = "";
-            this.loading = false;
-          },
-          submit: function () {
-            if (this.worked.trim() === "") {
-              return;
-            }
-            this.loading = true;
-            axios
-              .get("/api/query", {
-                params: {
-                  worked: this.worked,
-                },
-              })
-              .then((res) => {
-                if (res.status === 200) {
-                  this.loading = false;
-                  const { data: response = {} } = res;
-                  const { code, data = [] } = response;
-                  if (code === 0) {
-                    this.init = false;
-                    this.record = data;
-                  } else {
-                    alert("something wrong");
-                  }
-                } else {
-                  alert("something wrong");
-                }
-              })
-              .catch(function (error) {
-                this.loading = false;
-                alert("something wrong");
-              });
-          },
-        },
-      });
-    </script>
   </body>
 </html>
