@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1.296GHz 功放计划</title>
+    <link rel="icon" href="/favicon.png" sizes="16x16" type="image/png" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-JQNZVB40T0"
+    ></script>
+    <script async src="/static/common.js"></script>
+    <link rel="stylesheet" href="/static/common.css" />
+  </head>
+
+  <body>
+    <h1>1.296GHz 功放计划（持续更新中）</h1>
+    <p>
+      2021年的时候，因为持续无法短波开台，索性把短波电台都卖了，开始尝试一些有挑战的波段，做一些技术储备。于是我瞄准了国内HAM基本没有涉及的波段中的相对入门的波段，1.3G业余段。尝试打造一套自己的1.296GHz电台。
+    </p>
+    <p>
+      1.3G业余段在国内的无线电划分中属于次要业务，可以使用的范围是1.240GHz -
+      1.300GHz。国际上通常做DX在1.296GHz上。
+    </p>
+    <br />
+    <p>
+      1.3G业余段目前的支持多模式的商品电台非常少，常见的只有Kenwood的TS-2000X和Icom的IC-9700。TS-2000X在国内的保有量少得可怜，IC-9700除了万把出头的昂贵的价格外，频率不稳的问题也存在。所以，DIY的路子可能更适合我。
+    </p>
+    <p>
+      参考了老外的方式，都是使用144/430的成品电台，通过上变频器，滤波器，功放使用。但是2021年的，SDR技术非常成熟了，没必要使用如此原始的方案，直接用SDR直推是可行的。说干就干！
+    </p>
+    <br />
+    <p>
+      因为本人是软件相关专业毕业，没接触过电路板设计，所以，决定先试试设计一个144MHz功放试试水。参考了G4DDK的方案，最终也做出来了，还没有进行测试，本文也不展开讲了
+    </p>
+    <br />
+    <h3>核心</h3>
+    <p>
+      首先是最核心的信号频率源，这里选择了HackRF
+      one在作为核心，它有丰富的GPID控制，很不错的社区和可开发性。我可以直接在hackRF上实现sequencer，此外还能通过接口引入高精度时钟，不用担心频率飘了。但是缺点是，不支持收发隔离...这个有点烦，我还得再接个继电器
+    </p>
+    <br />
+    <h3>前置放大器</h3>
+    <p>
+      在设计前置放大器之前，我需要先明确我的目标功率是多少？我给自己定的目标是150瓦。
+    </p>
+    <p style="color: coral">
+      PS:为什么是150瓦？常用的电路板材质为玻纤混压板（FR-4），因为1.2G已经属于高频的范畴，能量并不是随着铜导线走，而是在介质中跑。这时候，FR-4的缺点就非常明显了，首先是玻纤容易受潮，受潮会导致介电常数改变，导致阻抗改变。还有FR4介点常数大，损耗略大，TG值较低，发热也不稳定。而且所可以参考版本的MOSFET其P1dB约为150瓦
+    </p>
+    <p>
+      我的HackRF在1.296GHz上的输出功率在11dBm，这是个非常小的功率，而要达到MRF6S9160H理想P1dB的52dBm则至少需要32.5dBm。这时候就需要设计一个前置放大器。
+    </p>
+    <img
+      src="/static/blog/MRF6S9160-POWER.png"
+      width="400px"
+      alt="MRF6S9160H datasheet"
+    />
+    <p>- MRF6S9160H datasheet -</p>
+    <p>
+      在参考了W1GHZ的PGA103+用于LNA的设计 *<a
+        href="http://www.w1ghz.org/small_proj/Simple_Cheap_MMIC_Preamps.pdf"
+        target="_blank"
+        style="color: coral"
+        >W1GHZ Design Link</a
+      >*，并查阅了PGA103+的datasheet，我决定大胆的使用两级PGA103+来作为前置放大器。首先这管子不容易自激，噪音也小，而且在HackRF的11dBm一次放大后，差不多能到二次放大的P1dB，最终差不多可以到达33dBm。所以准备先试试水。
+    </p>
+    <img
+      src="/static/blog/PGA-103+data.png"
+      width="500px"
+      alt="PGA-103+ datasheet"
+    />
+    <p>- PGA-103+ datasheet -</p>
+    <p>
+      于是设计出了此电路
+      <span style="color: coral">PS: 部分LC电路参考了BG3MDO的设计</span>
+    </p>
+    <img src="/static/blog/Schematic_1296MHz-Preamp.png" width="700px" />
+    <img src="/static/blog/camphoto_1254324197.JPG" width="700px" />
+    <p>由于测试设备还没采购，暂未测试，未完待续</p>
+    <br />
+    <h3>功放核心放大</h3>
+    <p>
+      功放的核心放大器使用了DF9IC的MRF6S9160的方案，嗯，直接照搬，因为匹配是比较复杂的，另外超大焊盘对于阻抗控制也非常恶心。目前没有找到什么合适的可以仿真的软件，只能摸石头过河。
+      *<a
+        href="http://www.df9ic.de/doc/2015/mmrt_2015/mmrt_2015_1296MHz_PAs.pdf"
+        target="_blank"
+        style="color: coral"
+        >DF9IC Design Link</a
+      >* 准备春节后进行采购组装
+    </p>
+    <img src="/static/blog/IMG_2267.JPG" width="700px" />
+    <br />
+
+    <h3>功放核心控制</h3>
+    <p>
+      功放核心控制主要是PTT状态，温度，功率(TX/SWR)的监控，展示，所以目前看来，拥有丰富生态是ATMega328P是最合适的选择。
+    </p>
+    <p>
+      对于功率的检测，笔者当前的方案是使用30dB的定向耦合器，将正向功率和反射功率耦合出来，通过衰减片后，使用AD8313将射频功率信号转换为电压信号。
+    </p>
+    <p>
+      对于AD8313，其检测的最大功率为0dBm，另外输出电压幅度也比较小，所以使用LM358将电压变化放大，通过INA226采样，走I2C给ATMega328P来计算出最终功率。
+    </p>
+    <p>
+      此外ATMega328P还需要控制DPDT射频同轴开关的切换和LCD1206的展示。笔者目前绘制了一片开发板用于验证此方案的可行性。
+    </p>
+    <img src="/static/blog/IMG_2329.png" width="700px" />
+    <p>当前BOM配单完成，准备贴片并实验。</p>
+    <br />
+    <h3>总设计</h3>
+    <p>未完待续...</p>
+    <br />
+    <p>特别鸣谢：BG5TOX，BG3MDO，W1GHZ，DF9IC</p>
+    <p>Last Update 2022.01.29</p>
+    <hr />
+    <p>
+      &copy; 2015 - 2022 YuYan. All rights reserved. |
+      <a href="/privacy-policy.html">Privacy & Policy</a> |
+      <a href="/link.html">Links</a> |
+      <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en"
+        >CC BY-NC-ND 4.0</a
+      >
+    </p>
+  </body>
+</html>
