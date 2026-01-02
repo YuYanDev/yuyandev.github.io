@@ -1,187 +1,168 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Amature Radio Online Log</title>
-    <link rel="icon" href="/favicon.png" sizes="16x16" type="image/png" />
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-JQNZVB40T0"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Amature Radio Online Log</title>
+<style type="text/css">
+<!--
+body {
+  font-family: monospace, "Courier New", Courier;
+  font-size: 12px;
+  background-color: #FFFFFF;
+  color: #000000;
+  margin: 10px;
+  line-height: 1.5;
+}
 
-      gtag("config", "G-JQNZVB40T0");
-    </script>
-    <style>
-      html {
-        margin: 0;
-        padding: 0;
-        font-family: monospace;
-      }
+p {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
 
-      body {
-        margin: 0 20px;
-      }
+h1 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 24px;
+  color: #000080;
+}
 
-      h1,
-      h2,
-      h3,
-      h4,
-      h5 {
-        font-family: "Bellefair", serif;
-      }
+h2 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  color: #000080;
+}
 
-      a {
-        text-decoration: none;
-      }
+h3 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  color: #000080;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
 
-      a:link {
-        color: rgb(0, 0, 238);
-      }
+a:link {
+  color: #0000FF;
+  text-decoration: underline;
+}
 
-      a:visited {
-        color: rgb(0, 0, 238);
-      }
+a:visited {
+  color: #800080;
+  text-decoration: underline;
+}
 
-      button {
-        font-family: monospace;
-        cursor: pointer;
-        outline: none;
-        border-width: 0.5px;
-        border-radius: 1px;
-        background: #fff;
-        font-size: 14px;
-        height: 22px;
-      }
-      table,
-      th,
-      td {
-        border: 1px solid black;
-      }
+a:hover {
+  color: #FF0000;
+  text-decoration: underline;
+}
 
-      th,
-      td {
-        padding: 4px;
-      }
+hr {
+  color: #000000;
+  height: 1px;
+}
 
-      input {
-        font-family: monospace;
-        outline-style: none;
-        border: 1px solid #ccc;
-        border-radius: 0px;
-        padding: 2px 2px;
-        width: 120px;
-        font-size: 14px;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- log search -->
-    <div style="margin: 0 20px">
-      <div style="margin-top: 16px">
-        <div style="font-size: larger">
-          BG5ABL Online Log Search (ClubLog OQRS)
-        </div>
+table {
+  border: 1px solid #000000;
+  border-collapse: collapse;
+}
 
-        <iframe
-          name="iframe"
-          src="https://clublog.org/logsearch.php?log=BG5ABL&iframe=1"
-          width="100%"
-          height="300"
-          scrolling="yes"
-          align="top"
-          frameborder="0"
-        ></iframe>
-      </div>
-      <div style="margin-top: 16px">
-        <div style="font-size: larger">
-          ex Callsign BG6TTI (2018.3-2021.8) Online Log Search (ClubLog OQRS)
-        </div>
+td, th {
+  border: 1px solid #000000;
+  padding: 4px;
+}
 
-        <iframe
-          name="iframe"
-          src="https://clublog.org/logsearch.php?log=BG6TTI&iframe=1"
-          width="100%"
-          height="300"
-          scrolling="yes"
-          align="top"
-          frameborder="0"
-        ></iframe>
-      </div>
-    </div>
-    <div style="margin: 0 20px">
-      <p>----------------RIG-----------------</p>
-      <p>&nbsp;</p>
-      <table style="border-collapse: collapse">
-        <thead>
-          <tr>
-            <th>RIG</th>
-            <th>RIG-Band</th>
-            <th>ANT</th>
-            <th>ANT-Band</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Senhaikesi 8800</td>
-            <td>144MHz/430MHz</td>
-            <td>Diamond 771</td>
-            <td>144MHz/430MHz</td>
-          </tr>
-          <tr>
-            <td>Baofeng UV-5R</td>
-            <td>144MHz/430MHz</td>
-            <td>Diamond 771</td>
-            <td>144MHz/430MHz</td>
-          </tr>
-        </tbody>
-      </table>
-      <p>&nbsp;</p>
-    </div>
-    <!-- QSL Info -->
-    <div style="margin: 0 20px">
-      <p>--------------QSL-INFO--------------</p>
-      <p>&nbsp;</p>
-      <p>Support: OQRS, LoTW, <del>Direct Via BH2RO</del></p>
-      <p>Not Support: EQSL</p>
+th {
+  background-color: #C0C0C0;
+  font-weight: bold;
+}
 
-      <p style="color: red">
-        <em>
-          <strong>
-            More info please contact me: sakura#alleysakura.com (The title needs
-            to indicate your callsign)
-          </strong>
-        </em>
-      </p>
+input {
+  font-family: monospace, "Courier New", Courier;
+  font-size: 12px;
+  border: 1px solid #000000;
+  padding: 2px;
+}
 
-      <p>&nbsp;</p>
-      <p>-------Direct-Address-(zh-CN)-------</p>
-      <p>&nbsp;</p>
-      <p>中国辽宁省沈阳市第6010号邮政信箱 110034</p>
-      <p>&nbsp;</p>
-      <p>-------Direct-Address-(en-US)-------</p>
-      <p>Direct via BH2RO, with SASE/SAE</p>
-      <p>&nbsp;</p>
-      <p>P.O.BOX 6010,</p>
-      <p>SHENYANG LIAONING 110034,</p>
-      <p>P.R.CHINA</p>
-      <p>&nbsp;</p>
-    </div>
-    <hr />
-    <div style="margin: 0 20px">
-      <p style="float: left">
-        &copy;2015 - 2022 YuYan. All Rights Reserved. |
-        <a href="/privacy-policy.html">Privacy & Policy</a> |
-        <a href="/link.html">Links</a> |
-        <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en">CC BY-NC-ND 4.0</a>
-      </p>
-      <p style="float: right">E-mail: sakura#alleysakura.com</p>
-    </div>
-  </body>
+button {
+  font-family: monospace, "Courier New", Courier;
+  font-size: 12px;
+  border: 1px solid #000000;
+  padding: 2px 8px;
+  background-color: #C0C0C0;
+}
+-->
+</style>
+</head>
+<body>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="15">
+<tr>
+<td>
+
+<div>
+<font size="4"><b>BG5ABL Online Log Search (ClubLog OQRS)</b></font>
+<br><br>
+<iframe name="iframe" src="https://clublog.org/logsearch.php?log=BG5ABL&iframe=1" width="100%" height="300" scrolling="yes" align="top" frameborder="0"></iframe>
+</div>
+
+<div style="margin-top: 20px;">
+<font size="4"><b>ex Callsign BG6TTI (2018.3-2021.8) Online Log Search (ClubLog OQRS)</b></font>
+<br><br>
+<iframe name="iframe" src="https://clublog.org/logsearch.php?log=BG6TTI&iframe=1" width="100%" height="300" scrolling="yes" align="top" frameborder="0"></iframe>
+</div>
+
+<p>----------------RIG-----------------</p>
+
+<table border="1" cellspacing="0" cellpadding="4">
+<tr>
+<th>RIG</th>
+<th>RIG-Band</th>
+<th>ANT</th>
+<th>ANT-Band</th>
+</tr>
+<tr>
+<td>Senhaikesi 8800</td>
+<td>144MHz/430MHz</td>
+<td>Diamond 771</td>
+<td>144MHz/430MHz</td>
+</tr>
+<tr>
+<td>Baofeng UV-5R</td>
+<td>144MHz/430MHz</td>
+<td>Diamond 771</td>
+<td>144MHz/430MHz</td>
+</tr>
+</table>
+
+<p>--------------QSL-INFO--------------</p>
+<p>Support: OQRS, LoTW, <del>Direct Via BH2RO</del></p>
+<p>Not Support: EQSL</p>
+
+<p><font color="#FF0000"><em><strong>More info please contact me: sakura#alleysakura.com (The title needs to indicate your callsign)</strong></em></font></p>
+
+<p>-------Direct-Address-(zh-CN)-------</p>
+<p>中国辽宁省沈阳市第6010号邮政信箱 110034</p>
+
+<p>-------Direct-Address-(en-US)-------</p>
+<p>Direct via BH2RO, with SASE/SAE</p>
+<p>P.O.BOX 6010,</p>
+<p>SHENYANG LIAONING 110034,</p>
+<p>P.R.CHINA</p>
+
+</td>
+</tr>
+</table>
+
+<hr>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="10">
+<tr>
+<td width="70%" align="left">
+<font size="2">&copy;2015 - 2022 YuYan. All Rights Reserved. | <a href="/privacy-policy.html">Privacy &amp; Policy</a> | <a href="/link.html">Links</a> | <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en">CC BY-NC-ND 4.0</a></font>
+</td>
+<td width="30%" align="right">
+<font size="2">E-mail: sakura#alleysakura.com</font>
+</td>
+</tr>
+</table>
+
+</body>
 </html>

@@ -1,56 +1,78 @@
-html {
-    margin: 0;
-    padding: 0;
-    font-family: monospace;
-  }
+/* Common CSS for 1998 style - CSS1 compatible with IE3/IE4 */
 
-  body {
-    margin: 0 20px;
-    max-width: 1280px;
-  }
+body {
+  font-family: monospace, "Courier New", Courier;
+  font-size: 12px;
+  background-color: #FFFFFF;
+  color: #000000;
+  margin: 10px;
+  line-height: 1.5;
+}
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
-    font-family: "Bellefair", serif;
-  }
+p {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
 
-  a {
-    text-decoration: none;
-  }
+h1 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 24px;
+  color: #000080;
+}
 
-  a:link {
-    color: rgb(0, 0, 238);
-  }
+h2 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  color: #000080;
+}
 
-  a:visited {
-    color: rgb(0, 0, 238);
-  }
+h3 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+  color: #000080;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
 
-  p {
-    font-family: monospace;
-  }
+h4 {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14px;
+  color: #000080;
+  margin-top: 15px;
+  margin-bottom: 8px;
+}
 
-  .title {
-    display: flex;
-    font-family: "Bellefair", serif;
-    font-size: 2em;
-    line-height: 50px;
-    margin: 20px 0;
-    margin-left: 10px;
-  }
+a:link {
+  color: #0000FF;
+  text-decoration: underline;
+}
 
-  @media screen and (max-device-width: 480px) {
-    .title {
-      display: block;
-      font-size: 25px;
-      margin-left: 0;
-    }
-  }
+a:visited {
+  color: #800080;
+  text-decoration: underline;
+}
 
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-  }
+a:hover {
+  color: #FF0000;
+  text-decoration: underline;
+}
+
+hr {
+  color: #000000;
+  height: 1px;
+}
+
+table {
+  border: 1px solid #000000;
+  border-collapse: collapse;
+}
+
+td, th {
+  border: 1px solid #000000;
+  padding: 4px;
+}
+
+th {
+  background-color: #C0C0C0;
+  font-weight: bold;
+}
